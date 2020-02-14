@@ -1,0 +1,45 @@
+name: Build
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - run: npm install
+      - run: npm test
+      - run: npm run build
+
+      - run: make -j$(nproc)
+        env:
+          TOOLCHAIN_TAG: 0.2.0
+      
+      - uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          prerelease: true
+          files: creeptsfs.ext2
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
+
+      - name: Login to Docker Hub
+        run: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Build cartesi/creepts-machine
+        run: docker build . -t cartesi/creepts-machine
+  
+      - name: Push to Docker Hub [latest]
+        run: docker push cartesi/creepts-machine
+        if: github.ref == 'refs/heads/develop'
+  
+      - name: Push to Docker Hub [tag]
+        run: |
+          docker tag cartesi/creepts-machine cartesi/creepts-machine:${GITHUB_REF:11}
+          docker push cartesi/creepts-machine:${GITHUB_REF:11}
+        if: startsWith(github.ref, 'refs/tags/v')
