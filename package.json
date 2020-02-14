@@ -1,0 +1,42 @@
+{
+  "name": "@cartesi/creepts-machine",
+  "version": "1.0.0",
+  "description": "Creepts's Cartesi Machine",
+  "main": "node-verifier.js",
+  "scripts": {
+    "build": "webpack",
+    "info": "npm-scripts-info",
+    "test": "jest"
+  },
+  "keywords": [
+    "cartesi",
+    "creepts"
+  ],
+  "author": "Danilo Tuler (danilo@cartesi.io)",
+  "license": "Apache-2.0",
+  "scripts-info": {
+    "info": "Display information about the package scripts",
+    "build": "Clean and rebuild the project using Webpack",
+    "test": "Unit test the project"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@bitjson/npm-scripts-info": "^1.0.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^3.0.3",
+    "jest": "^25.1.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "@cartesi/creepts-engine": "^0.1.0",
+    "@cartesi/creepts-mappack": "^0.1.0"
+  }
+}

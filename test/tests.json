@@ -1,0 +1,9 @@
+[
+    ["./logs/log_minimum.json", "original", 200],
+    ["./logs/log_short.json", "original", 905],
+    ["./logs/log_medium.json", "original", 4740],
+    ["./logs/log_long.json", "original", 14781],
+    ["./logs/high_original.json", "original", 666010],
+    ["./logs/high_waiting_line.json", "waiting_line", 1322716],
+    ["./logs/high_turn_round.json", "turn_round", 1163073]
+]
