@@ -11,13 +11,31 @@
 
 
 import { EngineRunner } from "@cartesi/creepts-engine";
+import { loadLevel, loadMap } from "@cartesi/creepts-mappack";
+
+const MAP_NAMES = [
+    "original",
+    "waiting_line",
+    "turn_round",
+    "hurry",
+    "civyshk_yard",
+    "civyshk_2y",
+    "civyshk_line5",
+    "civyshk_labyrinth",
+];
 
 export default function (args, readFile, stdout, progress) {
     const logsFile = readFile(args[2]);
-    const levelFile = readFile(args[3]);
-    
+    const mapIndex = parseInt(args[3]);
+
+    if (mapIndex < 0 || mapIndex >= MAP_NAMES.length) {
+        stdout(0 + '\t' + `Invalid map index: ${mapIndex}`);
+        return;
+    }
+
+    const map = loadMap(MAP_NAMES[mapIndex]);
+    const level = loadLevel(map);
     const logs = JSON.parse(logsFile);
-    const level = JSON.parse(levelFile);
 
     progress = (args.indexOf('--debug') >= 0 || args.indexOf('-d') >= 0) ? progress : undefined;
     

@@ -1,8 +1,8 @@
 {
   "name": "@cartesi/creepts-machine",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Creepts's Cartesi Machine",
-  "main": "node-verifier.js",
+  "main": "src/node-verifier.js",
   "scripts": {
     "build": "webpack",
     "info": "npm-scripts-info",

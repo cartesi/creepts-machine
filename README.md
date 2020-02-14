@@ -16,13 +16,12 @@ Building Creepts:
 
 ```bash
 $ npm run build
-$ cp dist/djs-verifier-bundle.js machine/fs/bin/
+$ cp dist/djs-verifier-bundle.js fs/bin/
 ```
 
 Building djs and creeptsfs.ext2:
 
 ```bash
-$ cd machine
 $ make
 ```
 This should produce creeptsfs.ext2.
