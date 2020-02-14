@@ -23,4 +23,4 @@ function readFile(n) {
 // because it was designed for node, which includes node as process.argv[0]
 // so let's add it so program.parse works
 scriptArgs.unshift('./qjs');
-verifier(scriptArgs, readFile, console.log, console.error);
+verifier(scriptArgs, readFile, console.log, (info) => std.err.puts(JSON.stringify(info) + '\n'));

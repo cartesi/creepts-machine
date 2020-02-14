@@ -25,21 +25,32 @@ const MAP_NAMES = [
 ];
 
 export default function (args, readFile, stdout, progress) {
-    const logsFile = readFile(args[2]);
-    const mapIndex = parseInt(args[3]);
-
-    if (mapIndex < 0 || mapIndex >= MAP_NAMES.length) {
-        stdout(0 + '\t' + `Invalid map index: ${mapIndex}`);
-        return;
-    }
-
-    const map = loadMap(MAP_NAMES[mapIndex]);
-    const level = loadLevel(map);
-    const logs = JSON.parse(logsFile);
-
-    progress = (args.indexOf('--debug') >= 0 || args.indexOf('-d') >= 0) ? progress : undefined;
-    
     try {
+        const logsFile = readFile(args[2]);
+        const mapIndex = parseInt(args[3]);
+
+        // check map index bounds
+        if (mapIndex < 0 || mapIndex >= MAP_NAMES.length) {
+            throw new Error(`Invalid map index: ${mapIndex}`);
+        }
+
+        // load map
+        const mapName = MAP_NAMES[mapIndex];
+        const map = loadMap(mapName);
+        if (!map) {
+            throw new Error(`Could not load map: ${mapName}`);
+        }
+
+        // build level object
+        const level = loadLevel(map);
+
+        // load log file
+        const logs = JSON.parse(logsFile);
+    
+        // progress funcion if debug is specified
+        progress = (args.indexOf('--debug') >= 0 || args.indexOf('-d') >= 0) ? progress : undefined;
+
+        // create runner and run log
         const runner = new EngineRunner(level);
         const state = runner.run(logs, progress);
         

@@ -5,7 +5,7 @@ echo Getting log
 ./getlog > /tmp/log
 echo Getting level
 level=$(./getlevel)
-echo Running verification
-score=$(./djs djs-verifier-bundle.js /tmp/log ${level} "$@" | tail -n 1)
+echo "Running verification for level ${level}"
+score=$(./qjs --std qjs-verifier-bundle.js /tmp/log ${level} "$@" | tail -n 1)
 echo Writing results
 ./writebe64 $score | dd status=none of=$(./flashdevicebylabel output)
