@@ -6,22 +6,16 @@ This is the Cartesi Machine that produces the score given a log for the Creepts 
 
 ### Requirements
 
-This prototype uses the cartesi.so library to run the emulator. It also needs
-the rootfs.ext2, rom.bin, and kernel.bin files. The building process uses
-the `toolchain` Docker image. These are all products of the machine-emulator-sdk repository.
+This machine uses the cartesi.so library to run the emulator. It also needs
+the `rootfs.ext2`, `rom.bin`, and `kernel.bin` files. The building process uses
+the `toolchain` Docker image. These are all products of the [machine-emulator-sdk repository](https://github.com/cartesi/machine-emulator-sdk).
 
-The first step is to create a filesystem with creepts engine and associated tools inside. To do that we use the genext2 tool to create a filesystem with everything that is inside the `fs` folder. Before doing this we must have the latest version of the creepts engine in that folder.
+The first step is to create a filesystem with creepts engine and associated tools inside. To do that we use the `genext2` tool to create a filesystem with everything that is inside the `fs` folder. Before doing this we must have the latest version of the creepts engine in that folder.
 
-Building Creepts:
+Building:
 
 ```bash
 $ npm run build
-$ cp dist/djs-verifier-bundle.js fs/bin/
-```
-
-Building djs and creeptsfs.ext2:
-
-```bash
 $ make
 ```
 This should produce creeptsfs.ext2.
@@ -34,17 +28,21 @@ $ make clean
 
 ## Running Tests
 
-The emulator can be executed by having it installed locally or by using a pre-built Docker image for more convenience.
+The emulator can be executed by having it installed locally or by using a Docker image for more convenience.
 
 ### Running using Docker (TL;DR)
 
-We created a convenient Docker image called `cartesi/creepts-emulator` to make it easier to run the emulator with any game log file.
-
-You have to feed the log to `stdin` of the container. There are some example log files at `../test/logs`. Example below:
+We created a convenient Docker image called `cartesi/creepts-machine` to make it easier to run the emulator with any game log file.
+You can use a Docker image published at Docker Hub, or build one yourself by doing the command below after the build steps above.
 
 ```bash
-$ cd machine
-$ cat ../test/logs/log_minimum.json | docker run -i cartesi/creepts-emulator --level=0
+$ docker build . -t cartesi/creepts-machine
+```
+
+To run the emulator you need a game log file, and feed that through `stdin` to the container. There are some example log files at `test/logs`. Example below:
+
+```bash
+$ cat test/logs/log_minimum.json | docker run -i cartesi/creepts-machine --level=0
 ```
 
 This should run the verifier and print a variety of diagnostics information on
@@ -98,8 +96,7 @@ Now you need to obtain a Brotli compressed, then cpio'd log matching one of the
 logs in test/logs. For example:
 
 ```bash
-$ cd machine
-$ ./packlog ../test/logs/log_minimum.json 0.json.br.cpio
+$ ./packlog test/logs/log_minimum.json 0.json.br.cpio
 $ truncate -s 1m 0.json.br.cpio
 ```
 

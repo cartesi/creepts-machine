@@ -8,4 +8,5 @@ creeptsfs.ext2
 fs/bin/xxd
 fs/bin/djs
 fs/bin/qjs
+fs/bin/*-bundle*
 build
