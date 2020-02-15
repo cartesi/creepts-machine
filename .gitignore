@@ -2,8 +2,8 @@ node_modules
 dist
 third-party/downloads
 third-party/duktape-2.4.0/
+third-party/quickjs-2019-12-21/
 third-party/vim-*
-third-party/quickjs-*
 creeptsfs.ext2
 fs/bin/xxd
 fs/bin/djs
