@@ -1,4 +1,4 @@
-FROM cartesi/machine-emulator:0.1.0
+FROM cartesi/machine-emulator:0.2.0
 
 # Install tools
 RUN \
@@ -11,7 +11,7 @@ ENV PATH="/opt/cartesi/creepts:${PATH}"
 
 # download emulator files
 RUN \
-    wget https://github.com/cartesi/image-kernel/releases/download/v0.2.0/kernel.bin && \
+    wget https://github.com/cartesi/image-kernel/releases/download/v0.3.0/kernel.bin && \
     wget https://github.com/cartesi/machine-emulator-rom/releases/download/v0.2.0/rom.bin && \
     wget https://github.com/cartesi/image-rootfs/releases/download/v0.2.0/rootfs.ext2
 
